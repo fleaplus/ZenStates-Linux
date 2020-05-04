@@ -307,6 +307,8 @@ parser.add_argument('--c6-disable', action='store_true', help='Disable C-State C
 parser.add_argument('--smu-test-message', action='store_true', help='Send test message to the SMU (response 1 means "success")')
 parser.add_argument('--oc-frequency', default=550, type=int, help='Set overclock frequency (in MHz)')
 parser.add_argument('--oc-vid', default=-1, type=hex, help='Set overclock VID')
+parser.add_argument('--oc-enable', action='store_true', help='Enable OC')
+parser.add_argument('--oc-disable', action='store_true', help='Disable OC')
 parser.add_argument('--ppt', default=-1, type=int, help='Set PPT limit (in W)')
 parser.add_argument('--tdc', default=-1, type=int, help='Set TDC limit (in A)')
 parser.add_argument('--edc', default=-1, type=int, help='Set EDC limit (in A)')
@@ -367,6 +369,14 @@ if args.oc_frequency > 550:
 if args.oc_vid >= 0:
     writesmu(SMU_CMD_OC_VID, args.oc_vid)
     print('Set OC VID to %X' % args.oc_vid)
+
+if args.oc_enable:
+    writesmu(SMU_CMD_OC_ENABLE);
+    print('Enabling OC');
+
+if args.oc_disable:
+    writesmu(SMU_CMD_OC_DISABLE);
+    print('Disabling OC');
 
 if args.ppt > -1:
     setPPT(args.ppt)
